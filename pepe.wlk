@@ -1,16 +1,28 @@
 object pepe {    
-  var property categoria = cadete
-	var property tipoBonoResultados = bonoPorcentaje
-  var property tipoBonoPresentismo = bonoNomal
-  var property faltas = 0   //situaciónDeFaltas?
+  var categoria = cadete
+	var tipoBonoResultados = bonoPorcentaje
+  var tipoBonoPresentismo = bonoNormal
+  var property faltas = 0 
 
   method sueldo() = self.neto() + self.bonoResultados() + self.bonoPresentismo()
 
   method neto() = categoria.neto()
 
-  method bonoResultados() = tipoBonoResultados.bono(self) //duda
+  method bonoResultados() = tipoBonoResultados.bono(self)
     
-  method bonoPresentismo() = tipoBonoPresentismo.bono(self) //duda
+  method bonoPresentismo() = tipoBonoPresentismo.bono(self)
+
+  method categoria(_categoria) {
+    categoria = _categoria
+  }
+
+  method tipoBonoResultados(_tipoBonoResultados) {
+    tipoBonoResultados = _tipoBonoResultados
+  }
+
+  method tipoBonoPresentismo(_tipoBonoPresentismo) {
+    tipoBonoPresentismo = _tipoBonoPresentismo
+  }
 }
 
 // ---- Categorías ---------------------
@@ -27,29 +39,32 @@ object bonoPorcentaje {
   method bono(empleado) = empleado.neto() * (10/100)
 }
 
-object bonoMonto {
-  method bono() = 800 
+object bonoMontoFijo {
+  method bono(empleado) = 800 
 }
 
 object bonoNulo{
-  method bono() = 0 //neutro de la suma
+  method bono(empleado) = 0 //neutro de la suma
 }
 
 // ---- Bonos por presentismo -------------
-object bonoNomal {
+object bonoNormal {
   method bono(empleado) =                   // a mejorar
-    if (empleado.cantDeFaltas() == 0) {
+    if (empleado.faltas() == 0) {
       2000
-    } else if (empleado.cantDeFaltas() == 1) {
+    } else self.bonoCuandoTieneFaltas(empleado)
+
+
+    method bonoCuandoTieneFaltas(empleado) =
+      if (empleado.faltas() == 1) {
       1000
-    } else {
-      0
-    }
+    } else 0
+
 }
 
 object bonoAjuste {
   method bono(empleado) = 
-    if (empleado.cantDeFaltas() == 0) 100 else 0
+    if (empleado.faltas() == 0) 100 else 0
 }
 
 object bonoDemagogico {
