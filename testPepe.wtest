@@ -3,8 +3,75 @@ import pepe.*
 describe "Sueldo Pepe" {
 	
 	test "Test 1" {
-		//TODO: Implementame
+		pepe.categoria(cadete)
+        pepe.tipoBonoResultados(bonoMontoFijo)
+        pepe.tipoBonoPresentismo(bonoNormal)
+		pepe.faltas(3)
+
+		assert.equals(20800, pepe.sueldo())
 	}
 
-	
+	test "Test 2" {
+		pepe.categoria(gerente)
+		pepe.tipoBonoResultados(bonoPorcentaje)
+		pepe.tipoBonoPresentismo(bonoNulo)
+
+		assert.equals(16500, pepe.sueldo())
+	}
+
+	test "Test 3"{
+		pepe.categoria(cadete)
+		pepe.tipoBonoResultados(bonoPorcentaje)
+		pepe.tipoBonoResultados(bonoNormal)
+		pepe.faltas(0)
+
+		assert.equals(24000, pepe.sueldo())
+	}
+
+	test "Test 4"{
+		pepe.categoria(cadete)
+		pepe.tipoBonoResultados(bonoPorcentaje)
+		pepe.tipoBonoPresentismo(bonoNormal)
+		pepe.faltas(1)
+
+		assert.equals(23000, pepe.sueldo())
+	}
+}
+
+test "Sofia como cadete a medio tiempo" {
+	sofia.categoria(cadete)
+	sofia.tipoBonoResultados(bonoPorcentaje)
+
+	assert.equals(28600, sofia.sueldo())
+}
+
+test "Pepe como cadete a medio tiempo" {
+	medioTiempo.categoriaBase(cadete)
+	pepe.categoria(medioTiempo)
+	pepe.tipoBonoResultados(bonoPorcentaje)
+    pepe.tipoBonoPresentismo(bonoNormal)
+
+	assert.equals(13000, pepe.sueldo())
+}
+
+test "Vendedor normal" {
+    vendedor.activarAumentoPorMuchasVentas()
+
+	assert.equals(20000, vendedor.neto())
+}
+
+test "caso de prueba" {
+	medioTiempo.categoriaBase(cadete)
+	pepe.categoria(medioTiempo)
+	pepe.tipoBonoResultados(bonoPorcentaje)
+	pepe.tipoBonoPresentismo(bonoDemagogico)
+	pepe.faltas(1)
+
+	roque.tipoBonoResultados(bonoMontoFijo)
+	ernesto.compa(pepe)
+	ernesto.tipoBonoPresentismo(bonoAjuste)
+
+	assert.equals(11500, pepe.sueldo())
+	assert.equals(37800, roque.sueldo())
+	assert.equals(10100, ernesto.sueldo())
 }
